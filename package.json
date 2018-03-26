@@ -1,0 +1,28 @@
+{
+  "name": "openidconnectapi",
+  "version": "1.0.0",
+  "description": "Restful api to verify authentication token of a user",
+  "main": "index.js",
+  "scripts": {
+    "test": "No test specified",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "Restful",
+    "API",
+    "bluecanvas"
+  ],
+  "author": "Muhammed Jobe",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.17.2"
+  },
+  "dependencies": {
+    "commander": "^2.15.1",
+    "express": "^4.16.3",
+    "got": "^8.3.0",
+    "jsonwebtoken": "^8.2.0",
+    "jsrsasign": "^8.0.6",
+    "mongoose": "^5.0.11"
+  }
+}
