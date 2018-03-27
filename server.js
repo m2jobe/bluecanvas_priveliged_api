@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-var routes = require('./api/routes/openIdApiRoutes'); //importing route
+var routes = require('./api/routes/v1/openIdApiRoutes'); //importing route
 routes(app); //register the route
 
 
