@@ -1,5 +1,6 @@
 # bluecanvaspriveligedapi
 
+Documentation: https://muhammedjobe.com/bc_apidoc/
 
 Build a API server that accepts requests authorized by the OpenID Connect (OAuth 2.0) identity provider https://samples.auth0.com/.
 
