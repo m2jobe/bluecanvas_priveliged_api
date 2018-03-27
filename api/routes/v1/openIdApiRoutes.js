@@ -2,7 +2,7 @@
 module.exports = function(app) {
   var controller = require('../../controllers/openIdApiController');
 
-  // todoList Routes
+  // Routes
   app.route('/v1/verifyAccessToken')
     .get(controller.verifyAccessToken)
     ;
