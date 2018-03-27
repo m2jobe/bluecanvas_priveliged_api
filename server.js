@@ -6,7 +6,7 @@ var express = require('express'),
 var RateLimit = require('express-rate-limit');
 var helmet = require('helmet')
 
-//app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
+app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
 
 var limiter = new RateLimit({
   windowMs: 15*60*1000, // 15 minutes
