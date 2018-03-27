@@ -58,7 +58,7 @@ exports.verifyAccessToken = function(req, res) {
               }
             });
           } else {
-            res.status(403).json({ error: 'Issue verifying the token, and it iss, aud and exp' });
+            res.status(403).json({ error: 'Issue verifying the tokens issuer/audience/expiration date' });
           }
 
 
