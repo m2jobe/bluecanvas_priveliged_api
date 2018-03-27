@@ -18,19 +18,20 @@ exports.verifyAccessToken = function(req, res) {
     if (parts.length === 2) {
       var scheme = parts[0];
       var credentials = parts[1];
-
+        //Ensure formatting of Authorization header
         if (/^Bearer$/i.test(scheme)) {
 
           var inputToken = credentials;
 
-
+          //Split Token into header and payload
           var headerObj = KJUR.jws.JWS.readSafeJSONString(KJUR.b64utoutf8(inputToken.split(".")[0]));
           var payloadObj = KJUR.jws.JWS.readSafeJSONString(KJUR.b64utoutf8(inputToken.split(".")[1]));
-
+  
+          /*
+            jsrsasign library is being used to verify the iss, exp and aud of the JWT
+          */
           var sJWT = KJUR.jws.JWS.sign("HS256", headerObj, payloadObj, clientSecret);
-
           var currentTimestamp = Date.now() / 1000 | 0;
-
           try {
             var isValid = KJUR.jws.JWS.verifyJWT(sJWT,clientSecret,
                                                  {alg: ['HS256'],
@@ -42,8 +43,8 @@ exports.verifyAccessToken = function(req, res) {
             res.status(403).json({ error: 'Token is incorrect/malformed' })
           }
           // iss, aud and exp verified
+          
           // retreiving userinfo_endpoint via endpoint /tokeninfo
-
           if (isValid) {
             got('https://samples.auth0.com/tokeninfo?id_token='+inputToken, { json: true }).then(response => {
               res.status(200).json(response.body);
