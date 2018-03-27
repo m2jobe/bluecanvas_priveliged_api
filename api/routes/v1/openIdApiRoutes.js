@@ -1,11 +1,12 @@
 'use strict';
 module.exports = function(app) {
-  var todoList = require('../../controllers/openIdApiController');
+  var controller = require('../../controllers/openIdApiController');
 
   // todoList Routes
   app.route('/v1/verifyAccessToken')
-    .get(todoList.verifyAccessToken)
+    .get(controller.verifyAccessToken)
     ;
-
+  app.route('*')
+    .get(controller.returnBadRequest)
 
 };

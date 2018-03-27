@@ -23,18 +23,24 @@ exports.verifyAccessToken = function(req, res) {
 
           var inputToken = credentials;
 
+
           var headerObj = KJUR.jws.JWS.readSafeJSONString(KJUR.b64utoutf8(inputToken.split(".")[0]));
           var payloadObj = KJUR.jws.JWS.readSafeJSONString(KJUR.b64utoutf8(inputToken.split(".")[1]));
 
           var sJWT = KJUR.jws.JWS.sign("HS256", headerObj, payloadObj, clientSecret);
 
           var currentTimestamp = Date.now() / 1000 | 0;
-          var isValid = KJUR.jws.JWS.verifyJWT(sJWT,clientSecret,
-                                               {alg: ['HS256'],
-                                                verifyAt: IntDate.get(currentTimestamp.toString()),
-                                                iss: ['https://samples.auth0.com/'],
-                                                aud: ['kbyuFDidLLm280LIwVFiazOqjO3ty8KH']});
 
+          try {
+            var isValid = KJUR.jws.JWS.verifyJWT(sJWT,clientSecret,
+                                                 {alg: ['HS256'],
+                                                  verifyAt: IntDate.get(currentTimestamp.toString()),
+                                                  iss: ['https://samples.auth0.com/'],
+                                                  aud: ['kbyuFDidLLm280LIwVFiazOqjO3ty8KH']});
+          }
+          catch(err) {
+            res.status(403).json({ error: 'Token is incorrect/malformed' })
+          }
           // iss, aud and exp verified
           // retreiving userinfo_endpoint via endpoint /tokeninfo
 
