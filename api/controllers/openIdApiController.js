@@ -3,11 +3,13 @@
 const got = require('got');
 var KJUR = require('jsrsasign');
 var program = require('commander');
+require('dotenv').config();
 
 
 
 exports.verifyAccessToken = function(req, res) {
-  const clientSecret = "60Op4HFM0I8ajz0WdiStAbziZ-VFQttXuxixHHs2R7r7-CW8GR79l-mmLqMhc-Sa";
+
+  const clientSecret = process.env.CLIENT_SECRET;
 
   if (!req.headers.authorization) {
     res.status(403).json({ error: 'No credentials were sent!' });
@@ -26,7 +28,7 @@ exports.verifyAccessToken = function(req, res) {
           //Split Token into header and payload
           var headerObj = KJUR.jws.JWS.readSafeJSONString(KJUR.b64utoutf8(inputToken.split(".")[0]));
           var payloadObj = KJUR.jws.JWS.readSafeJSONString(KJUR.b64utoutf8(inputToken.split(".")[1]));
-  
+
           /*
             jsrsasign library is being used to verify the iss, exp and aud of the JWT
           */
@@ -43,7 +45,7 @@ exports.verifyAccessToken = function(req, res) {
             res.status(403).json({ error: 'Token is incorrect/malformed' })
           }
           // iss, aud and exp verified
-          
+
           // retreiving userinfo_endpoint via endpoint /tokeninfo
           if (isValid) {
             got('https://samples.auth0.com/tokeninfo?id_token='+inputToken, { json: true }).then(response => {
